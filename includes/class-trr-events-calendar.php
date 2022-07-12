@@ -178,7 +178,6 @@ class Trr_Events_Calendar {
     private function register_events_cpt() {
         add_action( 'init', function () {
 
-
             $eventLabels = array(
                 'name'               => __( 'Events', 'trr' ),
                 'singular_name'      => __( 'Event', 'trr' ),
@@ -210,7 +209,7 @@ class Trr_Events_Calendar {
                 'has_archive'        => true,
                 'hierarchical'       => false,
                 'menu_position'      => 35,
-                'supports'           => array( 'title', 'editor' ),
+                'supports'           => array( 'title' ),
                 'acfe_admin_archive' => true,
             );
 
