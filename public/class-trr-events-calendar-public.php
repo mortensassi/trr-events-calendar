@@ -40,6 +40,8 @@ class Trr_Events_Calendar_Public {
 	 */
 	private $version;
 
+    private $manifest;
+
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -49,9 +51,12 @@ class Trr_Events_Calendar_Public {
 	 */
 	public function __construct( $plugin_name, $version ) {
 
+        $manifest_path = plugin_dir_url( __FILE__ ) . 'app/dist/manifest.json';
+        $manifest = file_get_contents($manifest_path);
+
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
+        $this->manifest = json_decode($manifest, true);
 	}
 
 	/**
@@ -96,15 +101,18 @@ class Trr_Events_Calendar_Public {
 		 * class.
 		 */
 
-        if (defined('WP_ENV') && WP_ENV == 'development') { ?>
-            <script type="module" src="https://localhost:3002/@vite/client"></script>
-            <script type="module" src="https://localhost:3002/src/main.js"></script>
-            <?php
-        } else {
-            wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'app/dist/' . $this->manifest['src/main.js']['file'], $this->version, true );
-            wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'app/dist/style.css', $this->version, true );
-        };
+        if (is_post_type_archive('trr_event')) {
+	        if (defined('WP_ENV') && WP_ENV == 'development') { ?>
+                <script type="module" src="https://localhost:3002/@vite/client"></script>
+                <script type="module" src="https://localhost:3002/src/main.js"></script>
+		        <?php
+	        } else {
+		        wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'app/dist/' . $this->manifest['src/main.js']['file'], [], $this->version, true );
 
+		        wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'app/dist/style.css', $this->version, true );
+		        wp_enqueue_script($this->plugin_name);
+	        };
+        }
 	}
 
 }

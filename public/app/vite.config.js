@@ -10,17 +10,19 @@ export default defineConfig({
     manifest: true,
     lib: {
       name: 'trr-events-calendar',
-      entry: './src/main.js'
-    }
+      entry: './src/main.js',
+    },
   },
 
   resolve: {
     alias: [
       {
-        find: '@', replacement: path.resolve(__dirname, 'src'),
+        find: '@',
+        replacement: path.resolve(__dirname, 'src'),
       },
       {
-        find: '@styles', replacement: path.resolve(__dirname, 'src/assets/scss'),
+        find: '@styles',
+        replacement: path.resolve(__dirname, 'src/assets/scss'),
       },
     ],
   },
@@ -30,6 +32,6 @@ export default defineConfig({
     https: {
       key: '/Users/moe/certificates/localhost+2-key.pem',
       cert: '/Users/moe/certificates/localhost+2.pem',
-    }
-  }
+    },
+  },
 })
